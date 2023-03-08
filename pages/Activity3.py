@@ -104,47 +104,41 @@ def show_plot(new_image):
     st.pyplot(fig)
 
 def main():
-    print("Available Functions:")
-    print("1. Translation")
-    print("2. Rotation")
-    print("3. Scaling")
-    print("4. Shearing")
-    print("5. Reflection")
-    print("6. Exit")
-    choice = int(input("What function do you want to do?: "))
+    st.title("Image Transformation")
+    choice = st.selectbox("Choose a Function: ", ['Translation', 'Rotation', 'Scaling', 'Shearing', 'Reflection', 'Exit'])
      
-    if(choice == 1):
-        x = int(input("X Coordinates to Move Location: "))
-        y = int(input("Y Coordinates to Move Location: "))
+    if(choice == 'Translation'):
+        x = st.slider("X Coordinates to Move Location: ", 1, 10, 1)
+        y = st.slider("Y Coordinates to Move Location: ", 1, 10, 1)
         for img_number in range(1, 6): #Replace the value of the range if you wish to place a custom number of items
             img_ = read_img(img_number)
             rows, cols, dimm = img_.shape
             translated_image = translation_(img_, x, y, rows, cols)
             show_plot(translated_image)
-    elif(choice == 2):
-        angle = int(input("Rotation Degrees?: ")) # This prompt can be moved to the for loop in order to define the angle differently for each image
+    elif(choice == 'Rotation'):
+        angle = st.slider("Rotation Degrees?: ", 1, 20, 1) # This prompt can be moved to the for loop in order to define the angle differently for each image
         for img_number in range(1, 6):
             img_ = read_img(img_number)
             rows, cols, dimms = img_.shape
             img_rotated = rotation_(img_, angle, rows, cols)
             show_plot(img_rotated)
-    elif(choice == 3):
-        scale = int(input("How much do you want to Scale?: "))
+    elif(choice == 'Scaling'):
+        scale = st.slider("How much do you want to Scale?: ", 1, 10, 1)
         for img_number in range(1, 6):
             img_ = read_img(img_number)
             rows, cols, dimms = img_.shape
             print("Image " + str(img_number))
             img_scaled_ = scaling_(img_, scale, rows, cols)
             show_plot(img_scaled_)
-    elif(choice == 4):
-        type = int(input("Shearing Type (1 = x or 2 = y): "))
-        shear = float(input("How much do you want to shear? (0.5 - 2.0): "))
+    elif(choice == 'Shearing'):
+        type = st.selectbox("Shear Type: ", ("Horizontal", "Vertical"))
+        shear = st.slider("How much do you want to shear? (0.5 - 2.0): ", 0.5, 2.0, 0.5)
         for img_number in range(1, 6):
             img_ = read_img(img_number)
             rows, cols, dimms = img_.shape
             img_sheared_ = shearing(shear, img_, rows, cols, type)
             show_plot(img_sheared_)
-    elif(choice == 5):
+    elif(choice == 'Reflection'):
         for img_number in range(1, 6):
             img_ = read_img(img_number)
             rows, cols, dimms = img_.shape
