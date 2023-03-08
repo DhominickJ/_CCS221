@@ -5,7 +5,7 @@ import numpy as np
 import pages.Activity1 as act1
 import pages.Activity2 as act2
 import pages.Activity3 as act3
-import pages.Activity4 as act4
+# import pages.Activity4 as act4
 
 def main():
     st.title("Midterm Exam in CCS221")
