@@ -63,14 +63,20 @@ def brensenham(x1, y1, x2, y2, color):
 
 def main():
 
-    x1 = st.slider("Enter X1: ", 1, 100, 1) #slider for the x1 coordinate
-    y1 = st.slider("Enter Y1: ", 1, 100, 1) #slider for the y1 coordinate
-    x2 = st.slider("Enter X2: ", 1, 100, 1) #slider for the x2 coordinate
-    y2 = st.slider("Enter Y2: ", 1, 100, 1) #slider for the y2 coordinate
-    color = "r." #red color for the plotted line
-    color_midpoint = "b." #the color of the midpoint will be blue
-    DDALine (x1, y1, x2, y2, color, color_midpoint)
-    brensenham(x1, y1, x2, y2, color)
+    x1 = 1
+    x2 = 1
+    y1 = 1
+    y2 = 1
+
+    while(True):
+        x1 = st.slider("Enter X1: ", 1, 100, 1) #slider for the x1 coordinate
+        y1 = st.slider("Enter Y1: ", 1, 100, 1) #slider for the y1 coordinate
+        x2 = st.slider("Enter X2: ", 1, 100, 1) #slider for the x2 coordinate
+        y2 = st.slider("Enter Y2: ", 1, 100, 1) #slider for the y2 coordinate
+        color = "r." #red color for the plotted line
+        color_midpoint = "b." #the color of the midpoint will be blue
+        DDALine (x1, y1, x2, y2, color, color_midpoint)
+        brensenham(x1, y1, x2, y2, color)
 
 if __name__ == '__main__':
     main()
