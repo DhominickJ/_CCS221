@@ -111,12 +111,12 @@ def main():
         if(choice == 'Translation'):
             x = st.slider("X Coordinates to Move Location: ", 1, 10, 1)
             y = st.slider("Y Coordinates to Move Location: ", 1, 10, 1)
-            for img_number in range(1, 6): #Replace the value of the range if you wish to place a custom number of items
-                img_ = cv2.imread("1.jpg")
-                img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
-                rows, cols, dimm = img_.shape
-                translated_image = translation_(img_, x, y, rows, cols)
-                show_plot(translated_image)
+            #Replace the value of the range if you wish to place a custom number of items
+            img_ = cv2.imread("1.jpg")
+            img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
+            rows, cols, dimm = img_.shape
+            translated_image = translation_(img_, x, y, rows, cols)
+            show_plot(translated_image)
         elif(choice == 'Rotation'):
             angle = st.slider("Rotation Degrees?: ", 1, 20, 1) # This prompt can be moved to the for loop in order to define the angle differently for each image
             for img_number in range(1, 6):
