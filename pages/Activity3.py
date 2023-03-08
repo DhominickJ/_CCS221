@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import streamlit as st
 
 """
 Creating Different Functions using Open CV
@@ -99,8 +100,8 @@ def read_img(img_number):
 
 def show_plot(new_image):
     plt.axis('off')
-    plt.imshow(new_image)
-    plt.show()
+    fig = plt.imshow(new_image)
+    st.pyplot(fig)
 
 def main():
     print("Available Functions:")
