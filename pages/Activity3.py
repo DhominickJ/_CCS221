@@ -18,6 +18,7 @@ Members: Billena, Dhominick John
 
 #Translation
 def translation_(img_, x, y, rows, cols):
+    fig = st.figure()
     x = int(x)
     y = int(y)
     m_translation = np.float32([[1, 0, x],
@@ -26,7 +27,7 @@ def translation_(img_, x, y, rows, cols):
 
     translated_img_ = cv2.warpPerspective(img_, m_translation, (rows, cols))
 
-    return translated_img_
+    return fig
 
 def rotation_(img_, angle, rows, cols):
     img_angle = np.radians(angle)
@@ -101,7 +102,7 @@ def read_img(img_number):
 def show_plot(new_image):
     plt.axis('off')
     plt.imshow(new_image)
-    st.pyplot()
+    plt.pyplot()
 
 def main():
     st.title("Image Transformation")
@@ -116,7 +117,9 @@ def main():
             img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
             rows, cols, dimm = img_.shape
             translated_image = translation_(img_, x, y, rows, cols)
-            show_plot(translated_image)
+            plt.imshow(translated_image)
+            plt.axis('off')
+            st.pyplot(translated_image)
         elif(choice == 'Rotation'):
             angle = st.slider("Rotation Degrees?: ", 1, 20, 1) # This prompt can be moved to the for loop in order to define the angle differently for each image
             for img_number in range(1, 6):
