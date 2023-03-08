@@ -11,24 +11,13 @@ def main():
     st.title("Midterm Exam in CCS221")
     func = st.selectbox("Function Choices",options=['DDALine' , 'Flood Fill', 'Boundary Fill', 'Open CV', '3D Shapes'])
     if (func == 'DDALine'):
-        while(True):
-            st.header("Task 1")
-            st.subheader("DDA Line Algorithm")
-            x1 = st.slider("Enter X1: ", 1, 100, 1) #slider for the x1 coordinate
-            y1 = st.slider("Enter Y1: ", 1, 100, 1) #slider for the y1 coordinate
-            x2 = st.slider("Enter X2: ", 1, 100, 1) #slider for the x2 coordinate
-            y2 = st.slider("Enter Y2: ", 1, 100, 1) #slider for the y2 coordinate
-            choice = st.selectbox("Function", options = ["DDALine", "Brensenham"])
-            if choice == 'DDALine':
-                act1.DDALine (x1, y1, x2, y2, 'r.', 'b.')
-            else:
-                act1.Brensenham(x1, y1, x2, y2, 'r.')
+        act1.main()
     elif (func == 'Flood Fill'):
-        st.write("To be Fixed")
+        act2.main()
     elif (func == 'Boundary Fill'):
         st.write("To be Fixed")
     elif (func == 'Open CV'):   
-        st.write("To be Fixed")
+        act3.main()
     elif (func == '3D Shapes'):
         st.write("To be Fixed")
 

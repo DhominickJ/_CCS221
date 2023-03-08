@@ -16,7 +16,16 @@ Members: Billena, Dhominick John
 """
 
 #Translation
+def translation_(img_, x, y, rows, cols):
+    x = int(x)
+    y = int(y)
+    m_translation = np.float32([[1, 0, x],
+                                [0, 1, y],
+                                [0, 0, 1]])
 
+    translated_img_ = cv2.warpPerspective(img_, m_translation, (rows, cols))
+
+    return translated_img_
 
 def rotation_(img_, angle, rows, cols):
     img_angle = np.radians(angle)

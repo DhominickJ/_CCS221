@@ -33,15 +33,17 @@ def floodFillChecker(oldColor, newColor):
                     twoD_array[row][column] = newColor
                     # print(twoD_array)
 
+    print(twoD_array)
+    plt.imshow(twoD_array, interpolation = 'none', cmap = 'gray_r')
+    plt.colorbar()
+    plt.show()
+
 def main():
     print(twoD_array)
     oldColor = int(input("What is the Old Color to Change (0 | White & 1 | Black): "))
     newColor = int(input("What is the Replacement Color (0 | White & 1 | Black): "))
     floodFillChecker(oldColor, newColor)
-    print(twoD_array)
-    plt.imshow(twoD_array, interpolation = 'none', cmap = 'gray_r')
-    plt.colorbar()
-    plt.show()
+
 
 if __name__ == '__main__':
     main()
