@@ -94,14 +94,14 @@ def reflection_(img_, rows, cols):
     # return reflected_img_
 
 def read_img(img_number):
-    img_ = cv2.imread(str(img_number) + ".jpg")
+    img_ = cv2.imread("pages/" + str(img_number) + ".jpg")
     img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
     return img_
 
 def show_plot(new_image):
     plt.axis('off')
-    fig = plt.imshow(new_image)
-    st.pyplot(fig)
+    plt.imshow(new_image)
+    st.pyplot()
 
 def main():
     st.title("Image Transformation")
