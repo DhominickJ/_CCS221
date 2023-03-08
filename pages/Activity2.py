@@ -1,6 +1,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import streamlit as st
 
 """
 Flood Fill Algorithm Replaces the Old Value into the New Value if it has the Same values as defined by the Initial Color
@@ -40,8 +41,8 @@ def floodFillChecker(oldColor, newColor):
 
 def main():
     print(twoD_array)
-    oldColor = int(input("What is the Old Color to Change (0 | White & 1 | Black): "))
-    newColor = int(input("What is the Replacement Color (0 | White & 1 | Black): "))
+    oldColor = st.slider("What is the Old Color to Change (0 | White & 1 | Black): ", 1, 100, 1)
+    newColor = st.slider("What is the Replacement Color (0 | White & 1 | Black): ", 1, 100, 1)
     floodFillChecker(oldColor, newColor)
 
 

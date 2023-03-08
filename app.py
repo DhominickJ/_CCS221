@@ -11,18 +11,19 @@ def main():
     st.title("Midterm Exam in CCS221")
     func = st.selectbox("Function Choices",options=['DDALine' , 'Flood Fill', 'Boundary Fill', 'Open CV', '3D Shapes'])
     if (func == 'DDALine'):
+        st.subheader("DDA Line Algorithm")
         act1.main()
     elif (func == 'Flood Fill'):
+        st.subheader("Flood Fill Algorithm")
         act2.main()
     elif (func == 'Boundary Fill'):
-        st.write("To be Fixed")
-    elif (func == 'Open CV'):   
+        st.subheader("Boundary Fill Algorithm")
+    elif (func == 'Open CV'):
+        st.subheader("Open CV")
         act3.main()
     elif (func == '3D Shapes'):
+        st.subheader("Open CV")
         st.write("To be Fixed")
-
-
-
 
 if  __name__ == "__main__":
     main()
