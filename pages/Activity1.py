@@ -25,6 +25,7 @@ plt.xlabel("Horizontal Axis") #name for the x coordinate
 plt.ylabel("Vertical Axis") #name for the y coordinate
 
 def DDALine(x1, y1, x2, y2, color, color_midpoint): #function
+    fig = plt.figure()
     dx = x2 - x1 
     dy = y2 - y1
     x3 = (x1 + x2) /2 #coordinates for the midpoint on the horizontal axis
@@ -46,7 +47,7 @@ def DDALine(x1, y1, x2, y2, color, color_midpoint): #function
         x1 += Xinc
         y1 +=Yinc 
 
-    st.pyplot() #plot the graph
+    return fig
 
 def Brensenham(x1, y1, x2, y2, color):
     # midx = (x1 + x2) / 2
@@ -77,7 +78,7 @@ def main():
         color_midpoint = "b." #the color of the midpoint will be blue
         choice = st.selectbox("Function", options = ["DDALine", "Brensenham"])
         if choice == "DDALine":
-            DDALine (x1, y1, x2, y2, color, color_midpoint)
+            st.pyplot(DDALine (x1, y1, x2, y2, color, color_midpoint))
         else:
             Brensenham(x1, y1, x2, y2, color)
 
