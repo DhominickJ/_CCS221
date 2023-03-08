@@ -48,7 +48,7 @@ def DDALine(x1, y1, x2, y2, color, color_midpoint): #function
 
     st.pyplot() #plot the graph
 
-def brensenham(x1, y1, x2, y2, color):
+def Brensenham(x1, y1, x2, y2, color):
     # midx = (x1 + x2) / 2
     # midy = (y1 + y2) / 2
     m = (y2 - y1) / (x2 - x1)
@@ -75,8 +75,11 @@ def main():
         y2 = st.slider("Enter Y2: ", 1, 100, 1) #slider for the y2 coordinate
         color = "r." #red color for the plotted line
         color_midpoint = "b." #the color of the midpoint will be blue
-        DDALine (x1, y1, x2, y2, color, color_midpoint)
-        brensenham(x1, y1, x2, y2, color)
+        choice = st.selectbox("Function", options = ["DDALine", "Brensenham"])
+        if choice == "DDALine":
+            DDALine (x1, y1, x2, y2, color, color_midpoint)
+        else:
+            Brensenham(x1, y1, x2, y2, color)
 
 if __name__ == '__main__':
     main()
