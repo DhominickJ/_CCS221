@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+import streamlit as st
 
 """
 Members: Artacho, Cristopher Ian
@@ -20,7 +20,7 @@ Formula for the DDA Line's Algorithm Midpoint
 """
 
 
-plt.title("Mid Point Line Assignment") #title for the plot/graph
+st.title("Mid Point Line Assignment") #title for the plot/graph
 plt.xlabel("Horizontal Axis") #name for the x coordinate
 plt.ylabel("Vertical Axis") #name for the y coordinate
 
@@ -41,12 +41,13 @@ def DDALine(x1, y1, x2, y2, color, color_midpoint): #function
 
     for i in range(0, int(steps + 1)):
         #draw pixels 
-        plt.plot (int(x1), int(y1), color) #plots first the looped coordinates of x and y
-        plt.plot (x3, y3, color_midpoint) #plot for the midpoint's location
+        fig = plt.plot (int(x1), int(y1), color) #plots first the looped coordinates of x and y
+        fig_mid = plt.plot (x3, y3, color_midpoint) #plot for the midpoint's location
         x1 += Xinc
         y1 +=Yinc 
 
-    plt.show()
+    st.pyplot(fig)
+    st.pyplot(fig_mid)
 
 def brensenham(x1, y1, x2, y2, color):
     # midx = (x1 + x2) / 2
@@ -56,17 +57,17 @@ def brensenham(x1, y1, x2, y2, color):
 
     for x in range(x1, x2 + 1): #Increase the value of the second because it is rounded?
         y = round(m*x + c) 
-        plt.plot(int(x), int(y), color)
+        fig = plt.plot(int(x), int(y), color)
         # plt.plot(int(midx), int(midy), 'b.') #Having errors after defining the midpoint of the line in brensenham
 
-    plt.show()
+    st.pyplot(fig)
 
 def main():
 
-    x1 = int(input("Enter X1: "))
-    y1 = int(input("Enter Y1: "))
-    x2 = int(input("Enter X2: "))
-    y2 = int(input("Enter Y2: "))
+    x1 = st.slider("Enter X1: ", 0, 100, 0) #slider for the x1 coordinate
+    y1 = st.slider("Enter Y1: ", 0, 100, 0) #slider for the y1 coordinate
+    x2 = st.slider("Enter X2: ", 0, 100, 0) #slider for the x2 coordinate
+    y2 = st.slider("Enter Y2: ", 0, 100, 0) #slider for the y2 coordinate
     color = "r." #red color for the plotted line
     color_midpoint = "b." #the color of the midpoint will be blue
     DDALine (x1, y1, x2, y2, color, color_midpoint)
