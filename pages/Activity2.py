@@ -34,10 +34,9 @@ def floodFillChecker(oldColor, newColor):
                     twoD_array[row][column] = newColor
                     # print(twoD_array)
 
-    print(twoD_array)
     plt.imshow(twoD_array, interpolation = 'none', cmap = 'gray_r')
     plt.colorbar()
-    plt.show()
+    st.pyplot(twoD_array)
 
 def main():
     print(twoD_array)
