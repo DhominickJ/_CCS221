@@ -63,14 +63,14 @@ def brensenham(x1, y1, x2, y2, color):
 
 def main():
 
-        x1 = int(input("Enter X1: "))
-        y1 = int(input("Enter Y1: "))
-        x2 = int(input("Enter X2: "))
-        y2 = int(input("Enter Y2: "))
-        color = "r." #red color for the plotted line
-        color_midpoint = "b." #the color of the midpoint will be blue
-        DDALine (x1, y1, x2, y2, color, color_midpoint)
-        brensenham(x1, y1, x2, y2, color)
+    x1 = int(input("Enter X1: "))
+    y1 = int(input("Enter Y1: "))
+    x2 = int(input("Enter X2: "))
+    y2 = int(input("Enter Y2: "))
+    color = "r." #red color for the plotted line
+    color_midpoint = "b." #the color of the midpoint will be blue
+    DDALine (x1, y1, x2, y2, color, color_midpoint)
+    brensenham(x1, y1, x2, y2, color)
 
 if __name__ == '__main__':
     main()
