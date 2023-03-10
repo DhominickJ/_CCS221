@@ -5,14 +5,15 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 from scipy.spatial import Delaunay
 import tensorflow as tf
+import streamlit as st
 
 #to gett the points and be used on a 3D object function
 def plt_basic_object_(points):
 
     tri = Delaunay(points). convex_hull
 
-    fig = plt.figure(figsize=(8, 8)) #width and size in inches?
-    ax = fig.add_subplot(111, projection = '3d') #111 means 1x1 grid and projection '3d' enables the z axis
+    shape_fig = plt.figure(figsize=(8, 8)) #width and size in inches?
+    ax = shape_fig.add_subplot(111, projection = '3d') #111 means 1x1 grid and projection '3d' enables the z axis
     S = ax.plot_trisurf(points[:,0], points[:,1], points[:,2], #.plot trisurf means plot a triangulated surface
                         triangles = tri,
                         shade = True, cmap = cm.rainbow, lw=0.5)
@@ -27,7 +28,7 @@ def plt_basic_object_(points):
     ax.set_ylabel ("Y Axis") #label for the Y Axis
     ax.set_zlabel ("Z Axis")  #label for the Z axis
 
-    plt.show()
+    st.pyplot(fig=shape_fig)
 
 
 #function for cube
@@ -123,37 +124,31 @@ def translate_shape(points, amount):
     return tf.add(points, amount)
 
 def main():
-    print ("Available 3D Shapes:")
-    print("1. Cube")
-    print("2. Pyramid")
-    print("3. Diamond")
-    print("4. Prism")
-    choice = int(input("Enter your choice: "))
 
-    if(choice == 1):
+    choices = ['Cube', 'Pyramid', 'Diamond', 'Prism']
+    choice = st.selectbox('Select a shape', choices)
+    if choice == 'Cube':
         init_shape_ = _cube_(side_length=3)
-    elif(choice == 2):
+    elif choice == 'Pyramid':
         init_shape_ = triangle(side_length=3, negative=-3)
-    elif(choice == 3):
+    elif choice == 'Diamond':
         init_shape_ = diamond(side_length_top=5, negative_top=-5, side_length=3, negative=-3)
-    elif(choice == 4):
+    elif choice == 'Prism':
         init_shape_ = prism(side_length=3, negative=-3)
     else:
         print("Invalid choice, exiting the program")
         exit(1)
     
-    print("Functions: ")
-    print("1. Translate")
-    print("2. Rotate")
-    function = int(input("Function to Apply to Shape:  "))
+    st.title("Functions: ")
+    function= st.selectbox('Select a function', ['Translate', 'Rotate'])
 
-    if(function == 1): #For Translation
-        amount = int(input("Movement Amount: "))
+    if function == 'Translate':
+        amount = st.slider("Movement Amount: ", -5, 5, 1)
         with tf.compat.v1.Session() as session:
             translated_object = session.run(translate_shape(init_shape_, amount))
         plt_basic_object_(translated_object)
-    elif(function == 2): #For Rotation
-        angle = int(input("Rotation Angle: "))
+    elif function == 'Rotate':
+        angle = st.slider("Rotation Angle: ", 1, 100, 1)
         with tf.compat.v1.Session() as session:
             rotated_object = session.run(rotate_shape(init_shape_, angle))
         plt_basic_object_(rotated_object)
