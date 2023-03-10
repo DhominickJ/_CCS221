@@ -98,8 +98,8 @@ def read_img(img_number):
 
 def show_plot(new_image):
     plt.axis('off')
-    plt.imshow(new_image)
-    st.pyplot()
+    fig = plt.imshow(new_image)
+    st.pyplot(fig=fig)
 
 def main():
     st.title("Image Transformation")
