@@ -49,15 +49,16 @@ def DDALine(x1, y1, x2, y2, color, color_midpoint): #function
 
     return fig
 
-def Brensenham(x1, y1, x2, y2, color):
-    # midx = (x1 + x2) / 2
-    # midy = (y1 + y2) / 2
+def Brensenham(x1, y1, x2, y2, color, color_midpoint):
+    x3 = (x1 + x2) /2 #coordinates for the midpoint on the horizontal axis
+    y3 = (y1 + y2) /2 #coordinates for the midpoint on the vertical axis
     m = (y2 - y1) / (x2 - x1)
     c = 1
 
     for x in range(x1, x2 + 1): #Increase the value of the second because it is rounded?
         y = round(m*x + c) 
         plt.plot(int(x), int(y), color)
+        plt.plot (x3, y3, color_midpoint) #plot for the midpoint's location
         # plt.plot(int(midx), int(midy), 'b.') #Having errors after defining the midpoint of the line in brensenham
 
     st.pyplot()
@@ -80,7 +81,7 @@ def main():
         if choice == "DDALine":
             st.pyplot(DDALine (x1, y1, x2, y2, color, color_midpoint))
         else:
-            Brensenham(x1, y1, x2, y2, color)
+            st.pyplot(Brensenham(x1, y1, x2, y2, color, color_midpoint))
 
 if __name__ == '__main__':
     main()
