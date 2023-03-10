@@ -44,8 +44,7 @@ def floodFill(two_d_array, x, y, newColor):
 def main():
     st.title("Flood Fill Algorithm")
     st.subheader("Fill Status: ")
-    plt.imshow(two_d_array, interpolation = 'none', cmap = 'gray_r')
-    st.pyplot()
+    
     while True:
         x = int(M / 2)# Since it's starting from the center of the grid
         y = int(N / 2) # Since it's starting from the center of the grid
