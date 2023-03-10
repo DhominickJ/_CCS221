@@ -160,7 +160,7 @@ def main():
         plt_basic_object_(translated_object)
     elif function == 'Rotate':
         type = st.selectbox('Select a rotation axis', ['x', 'y', 'z'])
-        angle = st.slider("Rotation Angle: ", 1, 100, 1)
+        angle = st.slider("Rotation Angle: ", 1, 360, 1)
         with tf.compat.v1.Session() as session:
             rotated_object = session.run(rotate_shape(init_shape_, angle, type))
         plt_basic_object_(rotated_object)
