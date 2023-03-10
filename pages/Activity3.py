@@ -108,8 +108,8 @@ def main():
         choice = st.selectbox("Choose a Function: ", options)
         
         if(choice == 'Translation'):
-            x = st.slider("X Coordinates to Move Location: ", 1, 10, 1)
-            y = st.slider("Y Coordinates to Move Location: ", 1, 10, 1)
+            x = st.slider("X Coordinates to Move Location: ", 1, 10, 10)
+            y = st.slider("Y Coordinates to Move Location: ", 1, 10, 5)
             for i in range(1, 6):
                 img_ = read_img(i)
                 rows, cols, dimm = img_.shape
