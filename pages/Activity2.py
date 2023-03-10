@@ -66,7 +66,8 @@ def main():
     while True:
         x = int(M / 2)# Since it's starting from the center of the grid
         y = int(N / 2) # Since it's starting from the center of the grid
-        function = st.selectbox("Function Choices",options=['Flood Fill', 'Boundary Fill'])
+        options=['Flood Fill', 'Boundary Fill']
+        function = st.selectbox("Function Choices", options, key=None, help=None)
         fill = st.checkbox("Fill Status: ", value=True, key=None, help=None)
         if fill == False:
             plt.imshow(original_array, interpolation = 'none', cmap = 'gray_r')
