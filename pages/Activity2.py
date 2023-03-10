@@ -68,11 +68,8 @@ def main():
         y = int(N / 2) # Since it's starting from the center of the grid
         function = st.selectbox("Function Choices",options=['Flood Fill', 'Boundary Fill'])
         fill = st.checkbox("Fill Status: ", value=True, key=None, help=None)
-        if fill == False and function == 'Flood Fill':
+        if fill == False:
             plt.imshow(original_array, interpolation = 'none', cmap = 'gray_r')
-            st.pyplot()
-        elif fill == False and function == 'Boundary Fill':
-            plt.imshow(two_d_array, interpolation = 'none', cmap = 'gray_r')
             st.pyplot()
         elif function == 'Flood Fill':
             newColor = 1
