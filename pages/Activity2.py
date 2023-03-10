@@ -6,6 +6,14 @@ import streamlit as st
 M = 8
 N = 8
  
+original_array = np.array([[0,0,0,0,0,0,0],
+                        [0,1,1,1,1,1,0],
+                        [0,1,0,0,0,1,0],
+                        [0,1,0,0,0,1,0],
+                        [0,1,0,0,0,1,0],
+                        [0,1,1,1,1,1,0],
+                        [0,0,0,0,0,0,0]]) #7x7 grid
+
 two_d_array = np.array([[0,0,0,0,0,0,0],
                         [0,1,1,1,1,1,0],
                         [0,1,0,0,0,1,0],
@@ -44,12 +52,17 @@ def floodFill(two_d_array, x, y, newColor):
 def main():
     st.title("Flood Fill Algorithm")
     st.subheader("Fill Status: ")
-    
+
     while True:
         x = int(M / 2)# Since it's starting from the center of the grid
         y = int(N / 2) # Since it's starting from the center of the grid
-        newColor = st.slider("What is the Old Color to Change (0 | White & 1 | Black): ", 0, 1, 1)
-        floodFill(two_d_array, x, y, newColor)
+        fill = st.checkbox("Fill Status: ", value=True, key=None, help=None)
+        if fill == False:
+            plt.imshow(original_array, interpolation = 'none', cmap = 'gray_r')
+            st.pyplot()
+        else:
+            newColor = 1
+            floodFill(two_d_array, x, y, newColor)
 
 if __name__ == '__main__':
     main()
