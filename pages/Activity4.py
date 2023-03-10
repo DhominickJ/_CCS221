@@ -7,12 +7,12 @@ from scipy.spatial import Delaunay
 import tensorflow as tf
 import streamlit as st
 
-#to gett the points and be used on a 3D object function
+#to get the points and be used on a 3D object function
 def plt_basic_object_(points):
 
     tri = Delaunay(points). convex_hull
 
-    shape_fig = plt.figure(figsize=(8, 8)) #width and size in inches?
+    shape_fig = plt.figure(figsize=(8, 8))
     ax = shape_fig.add_subplot(111, projection = '3d') #111 means 1x1 grid and projection '3d' enables the z axis
     S = ax.plot_trisurf(points[:,0], points[:,1], points[:,2], #.plot trisurf means plot a triangulated surface
                         triangles = tri,
@@ -112,18 +112,18 @@ def prism(bottom_lower =(0, 0, 0), side_length = 3, negative = 3):
 
 def rotate_shape(points, angle, type):
 
-    angle = float(angle)
-    if type == 'x':
+    angle = float(angle) #converts the angle to float because the matrix only accepts float is in float32
+    if type == 'x': #if type is x, then the rotation matrix will move from left to right
         rotation_matrix = tf.stack([[1, 0, 0],
                                     [0, tf.cos(angle), tf.sin(angle)],
                                     [0, -tf.sin(angle), tf.cos(angle)]
                                     ])
-    elif type == 'y':
+    elif type == 'y': #if type is y, then the rotation matrix will move from bottom to top
         rotation_matrix = tf.stack([[tf.cos(angle), 0, -tf.sin(angle)],
                                     [0, 1, 0],
                                     [tf.sin(angle), 0, tf.cos(angle)]
                                     ])
-    elif type == 'z':
+    elif type == 'z': #if type is z, then the rotation matrix will move from front to back
         rotation_matrix = tf.stack([[1, 0, 0],
                                     [0, tf.cos(angle), tf.sin(angle)],
                                     [0, -tf.sin(angle), tf.cos(angle)]
@@ -131,7 +131,7 @@ def rotate_shape(points, angle, type):
 
     return tf.matmul(tf.cast(points, tf.float32), tf.cast(rotation_matrix, tf.float32)) 
 
-def translate_shape(points, amount):
+def translate_shape(points, amount): #shifts the object's position based on what is added by the slider
     return tf.add(points, amount)
 
 def main():
@@ -153,14 +153,14 @@ def main():
     st.title("Functions: ")
     function= st.selectbox('Select a function', ['Translate', 'Rotate'])
 
-    if function == 'Translate':
+    if function == 'Translate': #shifts the object's location
         amount = st.slider("Movement Amount: ", -5, 5, 1)
         with tf.compat.v1.Session() as session:
             translated_object = session.run(translate_shape(init_shape_, amount))
         plt_basic_object_(translated_object)
-    elif function == 'Rotate':
+    elif function == 'Rotate': #rotates the x, y and z axes
         type = st.selectbox('Select a rotation axis', ['x', 'y', 'z'])
-        angle = st.slider("Rotation Angle: ", 1, 360, 1)
+        angle = st.slider("Rotation Angle: ", 1, 100, 1)
         with tf.compat.v1.Session() as session:
             rotated_object = session.run(rotate_shape(init_shape_, angle, type))
         plt_basic_object_(rotated_object)

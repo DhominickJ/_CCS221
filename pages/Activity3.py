@@ -15,9 +15,8 @@ Members: Billena, Dhominick John
          Artacho, Cristopher Ian
          Constantino, Els Dave
 """
-
-#Translation
 def translation_(img_, x, y, rows, cols):
+    #function to shift an image
     m_translation = np.float32([[1, 0, x],
                                 [0, 1, y],
                                 [0, 0, 1]])
@@ -27,6 +26,7 @@ def translation_(img_, x, y, rows, cols):
     return translated_img
 
 def rotation_(img_, angle, rows, cols):
+    #function to rotate an image
     img_angle = np.radians(angle)
     m_rotation = np.float32([[np.cos(img_angle), -(np.sin(img_angle)), 0],
                              [np.sin(img_angle), np.cos(img_angle), 0],
@@ -37,14 +37,16 @@ def rotation_(img_, angle, rows, cols):
     return rotated_img_
 
 def scaling_(img_, scale, rows, cols):
+    #function to scale an image
+    #Longhand method for scaling:
     # m_scaling = np.float32([[1.5, 0, 100],
     #                         [0, 1.8, 50],
     #                         [0, 0, 1]])
-
     # scaled_img_ = cv2.warpPerspective(img_, m_scaling, (rows*scale, cols*scale))
     # rows, cols, dimms = scaled_img_.shape
     # return scaled_img_
 
+    #Shorthand method for scaling:
     resized_img_ = cv2.resize(img_, None, fx = scale, fy = scale, interpolation= cv2.INTER_CUBIC)
     rows, cols, dimms = resized_img_.shape
 
@@ -55,16 +57,16 @@ def scaling_(img_, scale, rows, cols):
     
 
 def shearing(shear, img_, rows, cols, type):
-    #Create a matrix for shearing
+    #function to shear an image
 
-    if(type == 1):
-        m_shearing_x = np.float32([[1, shear, 0],
+    if(type == 1):#types of shearing
+        m_shearing_x = np.float32([[1, shear, 0], #Create a matrix for type 1 shearing
                                 [0, 1, 0],
                                 [0, 0, 1]])
         sheared_img_ = cv2.warpPerspective(img_, m_shearing_x, (rows, cols))
 
     else:
-        m_shearing_y = np.float32([[1, 0, 0],
+        m_shearing_y = np.float32([[1, 0, 0], #Create a matrix for shearing
                                     [shear, 1, 0],
                                     [0, 0, 1]])
         sheared_img_ = cv2.warpPerspective(img_, m_shearing_y, (rows, cols))
@@ -74,29 +76,31 @@ def shearing(shear, img_, rows, cols, type):
     return sheared_img_
 
 def reflection_(img_, rows, cols):
-    # Using the original method
+    #function for reflecting an image
+
+    #Longhand method for flipping the image upside down:
 
     # m_reflection = np.float32([[1, 0, 0],
     #                             [0, -1, rows],
     #                             [0, 0, 1]])
-
     # m_reflection_normal = np.float32([[-1, 0, cols],
     #                                   [0, 1, 0],
     #                                   [0, 0, 1]])
-
     # reflected_img_ = cv2.warpPerspective(img_, m_reflection_normal, (int(rows), int(cols)))
-
-    reflected_img_flipped_ = cv2.flip(img_, 0)
-
-    return reflected_img_flipped_
     # return reflected_img_
 
-def read_img(img_number):
+
+    #shorthand method for flipping the image upside down:
+    reflected_img_flipped_ = cv2.flip(img_, 0)
+    return reflected_img_flipped_
+    
+
+def read_img(img_number): #reads the image name, used to allow the image to be processed for the whole 
     img_ = cv2.imread("pages/" + str(img_number) + ".jpg")
     img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
     return img_
 
-def show_plot(new_image):
+def show_plot(new_image): #plots the image and prints it in a streamlit app
     plt.axis('off')
     plt.imshow(new_image)
     st.pyplot()
@@ -116,12 +120,11 @@ def main():
                 translated_image = translation_(img_, x, y, rows, cols)
                 show_plot(translated_image)
         elif(choice == 'Rotation'):
-            angle = st.slider("Rotation Degrees?: ", 1, 20, 1) # This prompt can be moved to the for loop in order to define the angle differently for each image
-            for img_number in range(1, 6):
-                img_ = read_img(img_number)
-                rows, cols, dimms = img_.shape
-                img_rotated = rotation_(img_, angle, rows, cols)
-                show_plot(img_rotated)
+            angle = st.slider("Rotation Degrees?: ", 1, 20, 1)
+            img_ = read_img(img_number)
+            rows, cols, dimms = img_.shape
+            img_rotated = rotation_(img_, angle, rows, cols)
+            show_plot(img_rotated)
         elif(choice == 'Scaling'):
             scale = st.slider("How much do you want to Scale?: ", 1, 10, 1)
             for img_number in range(1, 6):
