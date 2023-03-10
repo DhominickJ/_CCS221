@@ -49,6 +49,16 @@ def floodFill(two_d_array, x, y, newColor):
     plt.imshow(two_d_array, interpolation = 'none', cmap = 'gray_r')
     st.pyplot()
 
+def boundaryFill(two_d_array, x, y, newColor):
+    oldColor = two_d_array[x][y]
+    if(oldColor==newColor):
+      return
+    fillChecker(two_d_array, x, y, oldColor, newColor)
+
+    plt.imshow(two_d_array, interpolation = 'none', cmap = 'gray_r')
+    st.pyplot()
+
+
 def main():
     st.title("Flood Fill Algorithm")
     st.subheader("Fill Status: ")
@@ -56,13 +66,20 @@ def main():
     while True:
         x = int(M / 2)# Since it's starting from the center of the grid
         y = int(N / 2) # Since it's starting from the center of the grid
+        function = st.selectbox("Function Choices",options=['Flood Fill', 'Boundary Fill'])
         fill = st.checkbox("Fill Status: ", value=True, key=None, help=None)
-        if fill == False:
+        if fill == False and function == 'Flood Fill':
             plt.imshow(original_array, interpolation = 'none', cmap = 'gray_r')
             st.pyplot()
-        else:
+        elif fill == False and function == 'Boundary Fill':
+            plt.imshow(two_d_array, interpolation = 'none', cmap = 'gray_r')
+            st.pyplot()
+        elif function == 'Flood Fill':
             newColor = 1
-            floodFill(two_d_array, x, y, newColor)
+            floodFill(two_d_array, x, y, 1)
+        elif function == 'Boundary Fill':
+            newColor = 1
+            boundaryFill(two_d_array, x, y, newColor)
 
 if __name__ == '__main__':
     main()
