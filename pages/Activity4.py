@@ -110,13 +110,24 @@ def prism(bottom_lower =(0, 0, 0), side_length = 3, negative = 3):
      
     return points
 
-def rotate_shape(points, angle):
-    
+def rotate_shape(points, angle, type):
+
     angle = float(angle)
-    rotation_matrix = tf.stack([[tf.cos(angle), tf.sin(angle), 0],
-                                [-tf.sin(angle), tf.cos(angle), 0],
-                                [0, 0, 1]
-                                ])
+    if type == 'x':
+        rotation_matrix = tf.stack([[1, 0, 0],
+                                    [0, tf.cos(angle), tf.sin(angle)],
+                                    [0, -tf.sin(angle), tf.cos(angle)]
+                                    ])
+    elif type == 'y':
+        rotation_matrix = tf.stack([[tf.cos(angle), 0, -tf.sin(angle)],
+                                    [0, 1, 0],
+                                    [tf.sin(angle), 0, tf.cos(angle)]
+                                    ])
+    elif type == 'z':
+        rotation_matrix = tf.stack([[1, 0, 0],
+                                    [0, tf.cos(angle), tf.sin(angle)],
+                                    [0, -tf.sin(angle), tf.cos(angle)]
+                                    ])
 
     return tf.matmul(tf.cast(points, tf.float32), tf.cast(rotation_matrix, tf.float32)) 
 
@@ -148,9 +159,10 @@ def main():
             translated_object = session.run(translate_shape(init_shape_, amount))
         plt_basic_object_(translated_object)
     elif function == 'Rotate':
+        type = st.selectbox('Select a rotation axis', ['x', 'y', 'z'])
         angle = st.slider("Rotation Angle: ", 1, 100, 1)
         with tf.compat.v1.Session() as session:
-            rotated_object = session.run(rotate_shape(init_shape_, angle))
+            rotated_object = session.run(rotate_shape(init_shape_, angle, type))
         plt_basic_object_(rotated_object)
 
 if __name__ == '__main__':
