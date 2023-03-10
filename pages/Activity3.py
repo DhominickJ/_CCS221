@@ -18,16 +18,13 @@ Members: Billena, Dhominick John
 
 #Translation
 def translation_(img_, x, y, rows, cols):
-    fig = st.figure()
-    x = int(x)
-    y = int(y)
     m_translation = np.float32([[1, 0, x],
                                 [0, 1, y],
                                 [0, 0, 1]])
 
-    translated_img_ = cv2.warpPerspective(img_, m_translation, (rows, cols))
+    translated_img = cv2.warpPerspective(img_, m_translation, (rows, cols))
 
-    return fig
+    return translated_img
 
 def rotation_(img_, angle, rows, cols):
     img_angle = np.radians(angle)
@@ -95,31 +92,29 @@ def reflection_(img_, rows, cols):
     # return reflected_img_
 
 def read_img(img_number):
-    img_ = cv2.imread("1.jpg")
+    img_ = cv2.imread("pages/" + str(img_number) + ".jpg")
     img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
     return img_
 
 def show_plot(new_image):
     plt.axis('off')
     plt.imshow(new_image)
-    plt.pyplot()
+    st.pyplot()
 
 def main():
     st.title("Image Transformation")
     while(True):
-        choice = st.selectbox("Choose a Function: ", ['Translation', 'Rotation', 'Scaling', 'Shearing', 'Reflection', 'Exit'])
+        options = ['Translation', 'Shearing', 'Reflection', 'Rotation', 'Scaling']
+        choice = st.selectbox("Choose a Function: ", options)
         
         if(choice == 'Translation'):
             x = st.slider("X Coordinates to Move Location: ", 1, 10, 1)
             y = st.slider("Y Coordinates to Move Location: ", 1, 10, 1)
-            #Replace the value of the range if you wish to place a custom number of items
-            img_ = cv2.imread("1.jpg")
-            img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
-            rows, cols, dimm = img_.shape
-            translated_image = translation_(img_, x, y, rows, cols)
-            plt.imshow(translated_image)
-            plt.axis('off')
-            st.pyplot(translated_image)
+            for i in range(1, 6):
+                img_ = read_img(i)
+                rows, cols, dimm = img_.shape
+                translated_image = translation_(img_, x, y, rows, cols)
+                show_plot(translated_image)
         elif(choice == 'Rotation'):
             angle = st.slider("Rotation Degrees?: ", 1, 20, 1) # This prompt can be moved to the for loop in order to define the angle differently for each image
             for img_number in range(1, 6):
@@ -149,9 +144,6 @@ def main():
                 rows, cols, dimms = img_.shape
                 img_reflected_ = reflection_(img_, rows, cols)
                 show_plot(img_reflected_)
-        elif(choice == 6):
-            print("Exiting...")
-            exit()
         else:
             print("Invalid Choice")
 
