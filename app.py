@@ -9,15 +9,13 @@ import pages.Activity4 as act4
 
 def main():
     st.title("Midterm Exam in CCS221")
-    func = st.selectbox("Function Choices",options=['DDALine' , 'Flood Fill', 'Boundary Fill', 'Open CV', '3D Shapes'])
+    func = st.selectbox("Function Choices",options=['DDALine and Brensenham' , 'Flood Fill and Boundary Fill', 'Open CV', '3D Shapes'])
     if (func == 'DDALine'):
         st.subheader("DDA Line Algorithm")
         act1.main()
     elif (func == 'Flood Fill'):
         st.subheader("Flood Fill Algorithm")
         act2.main()
-    elif (func == 'Boundary Fill'):
-        st.subheader("Boundary Fill Algorithm")
     elif (func == 'Open CV'):
         st.subheader("Open CV")
         act3.main()
