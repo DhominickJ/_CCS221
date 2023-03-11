@@ -103,53 +103,53 @@ def read_img(img_number): #reads the image name, used to allow the image to be p
 def show_plot(new_image): #plots the image and prints it in a streamlit app
     plt.axis('off')
     plt.imshow(new_image)
-    st.pyplot()
+    st.pyplot(plt.gcf())
 
 def main():
     st.title("Image Transformation")
-    while(True):
-        options = ['Translation', 'Shearing', 'Reflection', 'Rotation', 'Scaling']
-        choice = st.selectbox("Choose a Function: ", options)
-        
-        if(choice == 'Translation'):
-            x = st.slider("X Coordinates to Move Location: ", 1, 10, 10)
-            y = st.slider("Y Coordinates to Move Location: ", 1, 10, 5)
-            for i in range(1, 6):
-                img_ = read_img(i)
-                rows, cols, dimm = img_.shape
-                translated_image = translation_(img_, x, y, rows, cols)
-                show_plot(translated_image)
-        elif(choice == 'Rotation'):
-            angle = st.slider("Rotation Degrees?: ", 1, 20, 1)
+    options = ['Translation', 'Shearing', 'Reflection', 'Rotation', 'Scaling']
+    choice = st.selectbox("Choose a Function: ", options, key="act3.selectbox")
+    
+    if(choice == 'Translation'):
+        x = st.slider("X Coordinates to Move Location: ", 1, 10, 10, key="x.trans.slider")
+        y = st.slider("Y Coordinates to Move Location: ", 1, 10, 5, key="y.trans.slider")
+        for i in range(1, 6):
+            img_ = read_img(i)
+            rows, cols, dimm = img_.shape
+            translated_image = translation_(img_, x, y, rows, cols)
+            show_plot(translated_image)
+    elif(choice == 'Rotation'):
+        angle = st.slider("Rotation Degrees?: ", 1, 20, 1, key="angle.rot.slider")
+        img_ = read_img(img_number)
+        rows, cols, dimms = img_.shape
+        img_rotated = rotation_(img_, angle, rows, cols)
+        show_plot(img_rotated)
+    elif(choice == 'Scaling'):
+        scale = st.slider("How much do you want to Scale?: ", 1, 10, 1, key="scale.scal.slider")
+        for img_number in range(1, 6):
             img_ = read_img(img_number)
             rows, cols, dimms = img_.shape
-            img_rotated = rotation_(img_, angle, rows, cols)
-            show_plot(img_rotated)
-        elif(choice == 'Scaling'):
-            scale = st.slider("How much do you want to Scale?: ", 1, 10, 1)
-            for img_number in range(1, 6):
-                img_ = read_img(img_number)
-                rows, cols, dimms = img_.shape
-                print("Image " + str(img_number))
-                img_scaled_ = scaling_(img_, scale, rows, cols)
-                show_plot(img_scaled_)
-        elif(choice == 'Shearing'):
-            type = st.selectbox("Shear Type: ", ("Horizontal", "Vertical"))
-            shear = st.slider("How much do you want to shear? (0.5 - 2.0): ", 0.5, 2.0, 0.5)
-            for img_number in range(1, 6):
-                img_ = read_img(img_number)
-                rows, cols, dimms = img_.shape
-                img_sheared_ = shearing(shear, img_, rows, cols, type)
-                show_plot(img_sheared_)
-        elif(choice == 'Reflection'):
-            for img_number in range(1, 6):
-                img_ = read_img(img_number)
-                rows, cols, dimms = img_.shape
-                img_reflected_ = reflection_(img_, rows, cols)
-                show_plot(img_reflected_)
-        else:
-            print("Invalid Choice")
+            print("Image " + str(img_number))
+            img_scaled_ = scaling_(img_, scale, rows, cols)
+            show_plot(img_scaled_)
+    elif(choice == 'Shearing'):
+        type = st.selectbox("Shear Type: ", ("Horizontal", "Vertical"), key="shear.type.selectbox")
+        shear = st.slider("How much do you want to shear? (0.5 - 2.0): ", 0.5, 2.0, 0.5, key="shear.scal.slider")
+        for img_number in range(1, 6):
+            img_ = read_img(img_number)
+            rows, cols, dimms = img_.shape
+            img_sheared_ = shearing(shear, img_, rows, cols, type)
+            show_plot(img_sheared_)
+    elif(choice == 'Reflection'):
+        for img_number in range(1, 6):
+            img_ = read_img(img_number)
+            rows, cols, dimms = img_.shape
+            img_reflected_ = reflection_(img_, rows, cols)
+            show_plot(img_reflected_)
+    else:
+        print("Invalid Choice")
 
 if __name__ == '__main__':
-    main()
+    while True:
+        main()
 

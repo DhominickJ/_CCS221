@@ -70,20 +70,22 @@ def main():
     y1 = 1
     y2 = 1
 
-    while(True):
-        x1 = st.slider("Enter X1: ", 1, 100, 1) #slider for the x1 coordinate
-        y1 = st.slider("Enter Y1: ", 1, 100, 1) #slider for the y1 coordinate
-        x2 = st.slider("Enter X2: ", 1, 100, 1) #slider for the x2 coordinate
-        y2 = st.slider("Enter Y2: ", 1, 100, 1) #slider for the y2 coordinate
-        color = "r." #red color for the plotted line
-        color_midpoint = "b." #the color of the midpoint will be blue
-        choice = st.selectbox("Function", options = ["DDALine", "Brensenham"])
-        if choice == "DDALine":
-            st.pyplot(DDALine (x1, y1, x2, y2, color, color_midpoint))
-        else:
-            st.pyplot(Brensenham(x1, y1, x2, y2, color, color_midpoint))
+    count = 0
+    
+    x1 = st.slider("Enter X1: ", 1, 100, 1, key = "x1.slider.1") #slider for the x1 coordinate
+    y1 = st.slider("Enter Y1: ", 1, 100, 1, key="2") #slider for the y1 coordinate
+    x2 = st.slider("Enter X2: ", 1, 100, 1, key="3") #slider for the x2 coordinate
+    y2 = st.slider("Enter Y2: ", 1, 100, 1, key="4") #slider for the y2 coordinate
+    color = "r." #red color for the plotted line
+    color_midpoint = "b." #the color of the midpoint will be blue
+    choice = st.selectbox("Function", options = ["DDALine", "Brensenham"], key="act1.selectbox")
+    if choice == "DDALine":
+        st.pyplot(DDALine (x1, y1, x2, y2, color, color_midpoint))
+    else:
+        st.pyplot(Brensenham(x1, y1, x2, y2, color, color_midpoint))
 
 if __name__ == '__main__':
-    main()
+    while True:
+        main()
 
 

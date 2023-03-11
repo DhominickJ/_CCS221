@@ -137,7 +137,7 @@ def translate_shape(points, amount): #shifts the object's position based on what
 def main():
 
     choices = ['Cube', 'Pyramid', 'Diamond', 'Prism']
-    choice = st.selectbox('Select a shape', choices)
+    choice = st.selectbox('Select a shape', choices, key="act4.main.selectbox")
     if choice == 'Cube':
         init_shape_ = _cube_(side_length=3)
     elif choice == 'Pyramid':
@@ -151,19 +151,20 @@ def main():
         exit(1)
     
     st.title("Functions: ")
-    function= st.selectbox('Select a function', ['Translate', 'Rotate'])
+    function= st.selectbox('Select a function', ['Translate', 'Rotate'], key="act4.function.selectbox")
 
     if function == 'Translate': #shifts the object's location
-        amount = st.slider("Movement Amount: ", -5, 5, 1)
+        amount = st.slider("Movement Amount: ", -5, 5, 1, key="act4.translate.slider")
         with tf.compat.v1.Session() as session:
             translated_object = session.run(translate_shape(init_shape_, amount))
         plt_basic_object_(translated_object)
     elif function == 'Rotate': #rotates the x, y and z axes
-        type = st.selectbox('Select a rotation axis', ['x', 'y', 'z'])
-        angle = st.slider("Rotation Angle: ", 1, 100, 1)
+        type = st.selectbox('Select a rotation axis', ['x', 'y', 'z'], key="act4.rotate.selectbox")
+        angle = st.slider("Rotation Angle: ", 1, 100, 1, key="act4.rotate.slider")
         with tf.compat.v1.Session() as session:
             rotated_object = session.run(rotate_shape(init_shape_, angle, type))
         plt_basic_object_(rotated_object)
 
 if __name__ == '__main__':
-    main()
+    while True:
+        main()
