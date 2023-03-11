@@ -9,7 +9,7 @@ import pages.Activity4 as act4
 
 def main():
     st.title("Midterm Exam in CCS221")
-    func = st.selectbox("Function Choices",options=['DDALine and Brensenham' , 'Flood Fill and Boundary Fill', 'Open CV', '3D Shapes'])
+    func = st.selectbox("Function Choices",options=['DDALine and Brensenham' , 'Flood Fill and Boundary Fill', 'Open CV', '3D Shapes'], key = "main1")
     if (func == 'DDALine and Brensenham'):
         st.subheader("DDA Line Algorithm and Brensenham")
         act1.main()
