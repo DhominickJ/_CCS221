@@ -120,10 +120,11 @@ def main():
             show_plot(translated_image)
     elif(choice == 'Rotation'):
         angle = st.slider("Rotation Degrees?: ", 1, 20, 1, key="angle.rot.slider")
-        img_ = read_img(img_number)
-        rows, cols, dimms = img_.shape
-        img_rotated = rotation_(img_, angle, rows, cols)
-        show_plot(img_rotated)
+        for img_number in range(1, 6):
+            img_ = read_img(img_number)
+            rows, cols, dimms = img_.shape
+            img_rotated = rotation_(img_, angle, rows, cols)
+            show_plot(img_rotated)
     elif(choice == 'Scaling'):
         scale = st.slider("How much do you want to Scale?: ", 1, 10, 1, key="scale.scal.slider")
         for img_number in range(1, 6):
