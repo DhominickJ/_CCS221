@@ -85,7 +85,7 @@ def main():
         newColor = 1
         boundaryFill(two_d_array, x, y, newColor)
 
-if __name__ == '__main__':
-    while True:
-        main()
+# if __name__ == '__main__':
+#     while True:
+#         main()
  

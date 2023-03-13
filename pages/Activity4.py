@@ -165,6 +165,6 @@ def main():
             rotated_object = session.run(rotate_shape(init_shape_, angle, type))
         plt_basic_object_(rotated_object)
 
-if __name__ == '__main__':
-    while True:
-        main()
+# if __name__ == '__main__':
+#     while True:
+#         main()

@@ -84,8 +84,8 @@ def main():
     else:
         st.pyplot(Brensenham(x1, y1, x2, y2, color, color_midpoint))
 
-if __name__ == '__main__':
-    while True:
-        main()
+# if __name__ == '__main__':
+#     while True:
+#         main()
 
 

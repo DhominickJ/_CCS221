@@ -150,7 +150,7 @@ def main():
     else:
         print("Invalid Choice")
 
-if __name__ == '__main__':
-    while True:
-        main()
+# if __name__ == '__main__':
+#     while True:
+#         main()
 
