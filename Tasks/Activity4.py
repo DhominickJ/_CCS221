@@ -131,8 +131,25 @@ def rotate_shape(points, angle, type):
 
     return tf.matmul(tf.cast(points, tf.float32), tf.cast(rotation_matrix, tf.float32)) 
 
-def translate_shape(points, amount): #shifts the object's position based on what is added by the slider
-    return tf.add(points, amount)
+def translate_shape(points, amount, translate_type): #shifts the object's position based on what is added by the slider
+
+    if translate_type == 'x':
+        translate_matrix = tf.stack([[1, 0, 0],
+                                    [0, 1, 0],
+                                    [amount, 0, 1]
+                                    ])
+    elif translate_type == 'y':
+        translate_matrix = tf.stack([[1, 0, 0],
+                                    [0, 1, amount],
+                                    [0, 0, 1]
+                                    ])
+    elif translate_type == 'z':
+        translate_matrix = tf.stack([[1, 0, amount],
+                                    [0, 1, 0],
+                                    [0, 0, 1]
+                                    ])
+    
+    return tf.matmul(tf.cast(points, tf.float32), tf.cast(translate_matrix, tf.float32))
 
 def scale_obj (points, amount):
 ##Update the values here to move the cube around x,y,z axis

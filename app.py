@@ -10,8 +10,8 @@ import Tasks.Quiz1 as quiz1
 
 
 def main():
-    # st.title("Midterm Exam in CCS221")
     with st.sidebar:
+        st.title("Midterm Exam in CCS221")
         func = st.selectbox("Function Choices",options=['DDALine and Brensenham' , 'Flood Fill and Boundary Fill', 'Open CV', '3D Shapes', 'Quiz'], key = "main1")
     if (func == 'DDALine and Brensenham'):
         st.subheader("DDA Line Algorithm and Brensenham")
