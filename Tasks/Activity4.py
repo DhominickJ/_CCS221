@@ -6,6 +6,7 @@ from matplotlib import cm
 from scipy.spatial import Delaunay
 import tensorflow as tf
 import streamlit as st
+# tf.disable_v2_behavior()
 
 #to get the points and be used on a 3D object function
 def plt_basic_object_(points):
@@ -131,25 +132,8 @@ def rotate_shape(points, angle, type):
 
     return tf.matmul(tf.cast(points, tf.float32), tf.cast(rotation_matrix, tf.float32)) 
 
-def translate_shape(points, amount, translate_type): #shifts the object's position based on what is added by the slider
-
-    if translate_type == 'x':
-        translate_matrix = tf.stack([[1, 0, 0],
-                                    [0, 1, 0],
-                                    [amount, 0, 1]
-                                    ])
-    elif translate_type == 'y':
-        translate_matrix = tf.stack([[1, 0, 0],
-                                    [0, 1, amount],
-                                    [0, 0, 1]
-                                    ])
-    elif translate_type == 'z':
-        translate_matrix = tf.stack([[1, 0, amount],
-                                    [0, 1, 0],
-                                    [0, 0, 1]
-                                    ])
-    
-    return tf.matmul(tf.cast(points, tf.float32), tf.cast(translate_matrix, tf.float32))
+def translate_obj(points, amount): #shifts the object's position based on what is added by the slider
+    return tf.add(points, amount) 
 
 def scale_obj (points, amount):
 ##Update the values here to move the cube around x,y,z axis
@@ -201,9 +185,8 @@ def main():
         init_shape_ = diamond(side_length_top=5, negative_top=-5, side_length=3, negative=-3)
     elif choice == 'Prism':
         init_shape_ = prism(side_length=3, negative=-3)
-    else:
-        print("Invalid choice, exiting the program")
-        exit(1)
+
+    points = tf.constant(init_shape_, dtype=tf.float32)
     
     with st.sidebar:
         st.title("Functions: ")
@@ -213,10 +196,14 @@ def main():
 
     if function == 'Translate': #shifts the object's location
         with st.sidebar:
-            trans_type = st.selectbox('Select a translation axis', ['x', 'y', 'z'], key="act4.translate.selectbox")
-            amount = st.slider("Movement Amount: ", -5, 5, 1, key="act4.translate.slider")
+            # trans_type = st.selectbox('Select a translation axis', ['x', 'y', 'z'], key="act4.translate.selectbox")
+            # amount = st.slider("Movement Amount: ", -5, 5, 1, key="act4.translate.slider")
+            x = st.slider("X Movement Amount: ", -5, 5, 1, key="act4.translate.slider1")
+            y = st.slider("Y Movement Amount: ", -5, 5, 1, key="act4.translate.slider2")
+            z = st.slider("Z Movement Amount: ", -5, 5, 1, key="act4.translate.slider3")
+        translation_amount = [x, z, y]
         with tf.compat.v1.Session() as session:
-            translated_object = session.run(translate_shape(init_shape_, amount, trans_type))
+            translated_object = session.run(translate_obj(init_shape_, translation_amount))
         plt_basic_object_(translated_object)
     elif function == 'Rotate': #rotates the x, y and z axes
         with st.sidebar:
@@ -226,7 +213,7 @@ def main():
             rotated_object = session.run(rotate_shape(init_shape_, angle, type))
         plt_basic_object_(rotated_object)
     elif function == 'Scale': #scales the object
-        amount = st.sidebar.slider("Scale Amount: ", -10, 10, 1, key="act4.scale.slider")
+        amount = st.sidebar.slider("Scale Amount: ", 1, 10, 1, key="act4.scale.slider")
         with tf.compat.v1.Session() as session:
             scaled_object = session.run(scale_obj(init_shape_, amount))
         plt_basic_object_(scaled_object)
