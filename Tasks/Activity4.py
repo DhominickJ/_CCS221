@@ -134,10 +134,48 @@ def rotate_shape(points, angle, type):
 def translate_shape(points, amount): #shifts the object's position based on what is added by the slider
     return tf.add(points, amount)
 
+def scale_obj (points, amount):
+##Update the values here to move the cube around x,y,z axis
+    scale_matrix = tf.stack([[-amount, 0, 0],
+                            [0, amount, 0],
+                            [0, 0, -amount]
+                            ])
+    return tf.matmul(tf.cast(points, tf.float32), tf.cast(scale_matrix, tf.float32))
+
+def shear_obj(points, yold, ynew, zold, znew, xold, xnew, type_shear):
+
+    sh_y = tf.multiply(yold, ynew)
+    sh_z = tf.multiply(zold, znew)
+
+    if type_shear == 'x':
+      shear_points = tf.stack([
+                            [sh_y, 0, 0],
+                            [sh_z, 1, 0],
+                            [0, 0, 1]
+                             ])
+    elif type_shear == 'y':
+        shear_points = tf.stack([
+                            [1, 0, 0],
+                            [sh_y, sh_z, 0],
+                            [0, 0, 1]
+                             ])
+    elif type_shear == 'z':
+        shear_points = tf.stack([
+                            [1, 0, 0],
+                            [0, 1, 0],
+                            [sh_y, sh_z, 1]
+                             ])
+      
+    shear_object = tf.matmul(tf.cast(points, tf.float32), tf.cast(shear_points, tf.float32))
+
+    return shear_object
+
+##Shear2
+
 def main():
 
     choices = ['Cube', 'Pyramid', 'Diamond', 'Prism']
-    choice = st.selectbox('Select a shape', choices, key="act4.main.selectbox")
+    choice = st.sidebar.selectbox('Select a shape', choices, key="act4.main.selectbox")
     if choice == 'Cube':
         init_shape_ = _cube_(side_length=3)
     elif choice == 'Pyramid':
@@ -150,21 +188,43 @@ def main():
         print("Invalid choice, exiting the program")
         exit(1)
     
-    st.title("Functions: ")
-    function= st.selectbox('Select a function', ['Translate', 'Rotate'], key="act4.function.selectbox")
+    with st.sidebar:
+        st.title("Functions: ")
+        function= st.selectbox('Select a function', ['Translate', 'Rotate', 'Scale', 'Shear'], key="act4.function.selectbox")
+        # translate = st.checkbox('Translate', key="act4.function.checkbox1")
+        # rotate = st.checkbox('Rotate', key="act4.function.checkbox2")
 
     if function == 'Translate': #shifts the object's location
-        amount = st.slider("Movement Amount: ", -5, 5, 1, key="act4.translate.slider")
+        amount = st.sidebar.slider("Movement Amount: ", -5, 5, 1, key="act4.translate.slider")
         with tf.compat.v1.Session() as session:
             translated_object = session.run(translate_shape(init_shape_, amount))
         plt_basic_object_(translated_object)
     elif function == 'Rotate': #rotates the x, y and z axes
-        type = st.selectbox('Select a rotation axis', ['x', 'y', 'z'], key="act4.rotate.selectbox")
-        angle = st.slider("Rotation Angle: ", 1, 100, 1, key="act4.rotate.slider")
+        with st.sidebar:
+            type = st.selectbox('Select a rotation axis', ['x', 'y', 'z'], key="act4.rotate.selectbox")
+            angle = st.slider("Rotation Angle: ", 1, 100, 1, key="act4.rotate.slider")
         with tf.compat.v1.Session() as session:
             rotated_object = session.run(rotate_shape(init_shape_, angle, type))
         plt_basic_object_(rotated_object)
+    elif function == 'Scale': #scales the object
+        amount = st.sidebar.slider("Scale Amount: ", -10, 10, 1, key="act4.scale.slider")
+        with tf.compat.v1.Session() as session:
+            scaled_object = session.run(scale_obj(init_shape_, amount))
+        plt_basic_object_(scaled_object)
+    elif function == 'Shear': #shears the object
+        with st.sidebar:
+            type_shear = st.selectbox('Select a shear axis', ['x', 'y', 'z'], key="act4.shear.selectbox")
+            st.write("Old Values:")
+            xold = st.slider("Xold: ", -10, 10, 1, key="act4.shear.slider1")
+            yold = st.slider("Yold: ", -10, 10, 1, key="act4.shear.slider2")
+            zold = st.slider("Zold: ", -10, 10, 1, key="act4.shear.slider3")
+            st.write("New Values:")
+            xnew = st.slider("Xnew: ", -10, 10, 1, key="act4.shear.slider4")
+            ynew = st.slider("Ynew: ", -10, 10, 1, key="act4.shear.slider5")
+            znew = st.slider("Znew: ", -10, 10, 1, key="act4.shear.slider6")
+        with tf.compat.v1.Session() as session:
+            sheared_object = session.run(shear_obj(init_shape_, yold, ynew, zold, znew, xold, xnew, type_shear))
+        plt_basic_object_(sheared_object)
 
-# if __name__ == '__main__':
-#     while True:
-#         main()
+if __name__ == '__main__':
+    main()

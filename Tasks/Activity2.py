@@ -72,9 +72,10 @@ def main():
     
     x = int(M / 2)# Since it's starting from the center of the grid
     y = int(N / 2) # Since it's starting from the center of the grid
-    options=['Flood Fill', 'Boundary Fill']
-    function = st.selectbox("Function Choices", options, key="act2.function.selectbox", help='Select a function to be executed')
-    fill = st.checkbox("Fill Status: ", value=True, key="act2.fillchecker", help='Check to fill the function')
+    with st.sidebar:
+        options=['Flood Fill', 'Boundary Fill']
+        function = st.selectbox("Function Choices", options, key="act2.function.selectbox", help='Select a function to be executed')
+        fill = st.checkbox("Fill Status: ", value=True, key="act2.fillchecker", help='Check to fill the function')
     if fill == False:
         plt.imshow(original_array, interpolation = 'none', cmap = 'gray_r')
         st.pyplot(plt.gcf())
