@@ -55,7 +55,7 @@ def scaling_(img_, scale, rows, cols):
     # print(rows)
     # print(cols)
 
-    return resized_img_
+    # return resized_img_
     
 
 def shearing(shear, img_, rows, cols, type):
@@ -123,11 +123,12 @@ def main():
             
     if(choice == 'Translation'):
         with st.sidebar:
+            translation_type = st.selectbox("Type of Translation: ", ['x', 'y', 'z'])
             x = st.slider("X Coordinates to Move Location: ", 1, 10, 10, key="x.trans.slider")
             y = st.slider("Y Coordinates to Move Location: ", 1, 10, 5, key="y.trans.slider")
         img_ = read_img(image)
         rows, cols, dimm = img_.shape
-        translated_image = translation_(img_, x, y, rows, cols)
+        translated_image = translation_(img_, x, y, rows, cols, translation_type)
         show_plot(translated_image)
     elif(choice == 'Rotation'):
         with st.sidebar:

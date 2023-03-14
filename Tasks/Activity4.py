@@ -212,9 +212,11 @@ def main():
         # rotate = st.checkbox('Rotate', key="act4.function.checkbox2")
 
     if function == 'Translate': #shifts the object's location
-        amount = st.sidebar.slider("Movement Amount: ", -5, 5, 1, key="act4.translate.slider")
+        with st.sidebar:
+            trans_type = st.selectbox('Select a translation axis', ['x', 'y', 'z'], key="act4.translate.selectbox")
+            amount = st.slider("Movement Amount: ", -5, 5, 1, key="act4.translate.slider")
         with tf.compat.v1.Session() as session:
-            translated_object = session.run(translate_shape(init_shape_, amount))
+            translated_object = session.run(translate_shape(init_shape_, amount, trans_type))
         plt_basic_object_(translated_object)
     elif function == 'Rotate': #rotates the x, y and z axes
         with st.sidebar:
