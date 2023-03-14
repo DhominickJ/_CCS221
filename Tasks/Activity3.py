@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import streamlit as st
+from PIL import Image
 
 # """
 # Creating Different Functions using Open CV
@@ -98,8 +99,8 @@ def reflection_(img_, rows, cols):
 
 def read_img(image): #reads the image name, used to allow the image to be processed for the whole 
     # img_ = cv2.imread("Tasks/" + str(image) + ".jpg")
-    img_ = cv2.imdecode(image)
-    img_ = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    converted_img = np.array(image.convert('RGB'))
+    img_ = cv2.cvtColor(converted_img, cv2.COLOR_BGR2RGB)
     return img_
 
 def show_plot(new_image): #plots the image and prints it in a streamlit app
@@ -115,15 +116,11 @@ def main():
         uploaded_file = st.file_uploader("Upload Image", type=['jpg', 'png', 'jpeg'])
         # image = uploaded_file.getvalue()
 
-        if uploaded_file is not None:
-            image = uploaded_file.getvalue()
-            st.write(image)
-            # img_ = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
-            # image = img_to_array(image)
-            # imag = np.array(img_) 
-            st.image(image, use_column_width=True)
-            image = np.array(img_)
-        
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+    else:
+        st.sidebar.error("Upload an Image")
+            
     if(choice == 'Translation'):
         with st.sidebar:
             x = st.slider("X Coordinates to Move Location: ", 1, 10, 10, key="x.trans.slider")
