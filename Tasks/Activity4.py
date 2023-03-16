@@ -191,13 +191,9 @@ def main():
     with st.sidebar:
         st.title("Functions: ")
         function= st.selectbox('Select a function', ['Translate', 'Rotate', 'Scale', 'Shear'], key="act4.function.selectbox")
-        # translate = st.checkbox('Translate', key="act4.function.checkbox1")
-        # rotate = st.checkbox('Rotate', key="act4.function.checkbox2")
 
     if function == 'Translate': #shifts the object's location
         with st.sidebar:
-            # trans_type = st.selectbox('Select a translation axis', ['x', 'y', 'z'], key="act4.translate.selectbox")
-            # amount = st.slider("Movement Amount: ", -5, 5, 1, key="act4.translate.slider")
             x = st.slider("X Movement Amount: ", -5, 5, 1, key="act4.translate.slider1")
             y = st.slider("Y Movement Amount: ", -5, 5, 1, key="act4.translate.slider2")
             z = st.slider("Z Movement Amount: ", -5, 5, 1, key="act4.translate.slider3")
