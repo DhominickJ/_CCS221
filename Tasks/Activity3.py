@@ -18,6 +18,7 @@ from PIL import Image
 # """
 
 def translation_(img_, x, y, rows, cols):
+
     #function to shift an image
     m_translation = np.float32([[1, 0, x],
                                 [0, 1, y],
@@ -123,12 +124,11 @@ def main():
             
     if(choice == 'Translation'):
         with st.sidebar:
-            translation_type = st.selectbox("Type of Translation: ", ['x', 'y', 'z'])
             x = st.slider("X Coordinates to Move Location: ", 1, 10, 10, key="x.trans.slider")
             y = st.slider("Y Coordinates to Move Location: ", 1, 10, 5, key="y.trans.slider")
         img_ = read_img(image)
         rows, cols, dimm = img_.shape
-        translated_image = translation_(img_, x, y, rows, cols, translation_type)
+        translated_image = translation_(img_, x, y, rows, cols)
         show_plot(translated_image)
     elif(choice == 'Rotation'):
         with st.sidebar:
