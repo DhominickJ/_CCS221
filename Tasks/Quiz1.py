@@ -48,18 +48,18 @@ def main():
 
         if uploaded_file is not None:
             image = Image.open(uploaded_file)
+            Bx_old = st.slider("Bx_old", 1, 100, 1)
+            By_old = st.slider("By_old", 1, 100, 1)
+            Tx = st.slider("Tx", 1, 100, 1)
+            Ty = st.slider("Ty", 1, 100, 1)
+
+            img = loadImage(image)
+            rows, cols, dimms = img.shape
+            translated_image = translation(img, Bx_old, By_old, Tx, Ty, rows, cols)
+
+            print_plot(translated_image)
         else:
             st.sidebar.error("Upload an Image")
-        Bx_old = st.slider("Bx_old", 1, 100, 1)
-        By_old = st.slider("By_old", 1, 100, 1)
-        Tx = st.slider("Tx", 1, 100, 1)
-        Ty = st.slider("Ty", 1, 100, 1)
-
-    img = loadImage(image)
-    rows, cols, dimms = img.shape
-    translated_image = translation(img, Bx_old, By_old, Tx, Ty, rows, cols)
-
-    print_plot(translated_image)
 
 if __name__ == '__main__':
     main()

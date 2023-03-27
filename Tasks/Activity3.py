@@ -119,46 +119,43 @@ def main():
 
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
+        if(choice == 'Translation'):
+            with st.sidebar:
+                x = st.slider("X Coordinates to Move Location: ", 1, 10, 10, key="x.trans.slider")
+                y = st.slider("Y Coordinates to Move Location: ", 1, 10, 5, key="y.trans.slider")
+            img_ = read_img(image)
+            rows, cols, dimm = img_.shape
+            translated_image = translation_(img_, x, y, rows, cols)
+            show_plot(translated_image)
+        elif(choice == 'Rotation'):
+            with st.sidebar:
+                angle = st.slider("Rotation Degrees?: ", 1, 360, 1, key="angle.rot.slider")
+            img_ = read_img(image)
+            rows, cols, dimms = img_.shape
+            img_rotated = rotation_(img_, angle, rows, cols)
+            show_plot(img_rotated)
+        elif(choice == 'Scaling'):
+            with st.sidebar:
+                scale = st.slider("How much do you want to Scale?: ", -10, 10, 1, key="scale.scal.slider")
+            img_ = read_img(image)
+            rows, cols, dimms = img_.shape
+            img_scaled_ = scaling_(img_, scale, rows, cols)
+            show_plot(img_scaled_)
+        elif(choice == 'Shearing'):
+            with st.sidebar:
+                type = st.selectbox("Shear Type: ", ("Horizontal", "Vertical"), key="shear.type.selectbox")
+                shear = st.slider("How much do you want to shear? (0.5 - 2.0): ", 0.5, 2.0, 0.5, key="shear.scal.slider")
+            img_ = read_img(image)
+            rows, cols, dimms = img_.shape
+            img_sheared_ = shearing(shear, img_, rows, cols, type)
+            show_plot(img_sheared_)
+        elif(choice == 'Reflection'):
+            img_ = read_img(image)
+            rows, cols, dimms = img_.shape
+            img_reflected_ = reflection_(img_, rows, cols)
+            show_plot(img_reflected_)
     else:
         st.sidebar.error("Upload an Image")
-            
-    if(choice == 'Translation'):
-        with st.sidebar:
-            x = st.slider("X Coordinates to Move Location: ", 1, 10, 10, key="x.trans.slider")
-            y = st.slider("Y Coordinates to Move Location: ", 1, 10, 5, key="y.trans.slider")
-        img_ = read_img(image)
-        rows, cols, dimm = img_.shape
-        translated_image = translation_(img_, x, y, rows, cols)
-        show_plot(translated_image)
-    elif(choice == 'Rotation'):
-        with st.sidebar:
-            angle = st.slider("Rotation Degrees?: ", 1, 360, 1, key="angle.rot.slider")
-        img_ = read_img(image)
-        rows, cols, dimms = img_.shape
-        img_rotated = rotation_(img_, angle, rows, cols)
-        show_plot(img_rotated)
-    elif(choice == 'Scaling'):
-        with st.sidebar:
-            scale = st.slider("How much do you want to Scale?: ", -10, 10, 1, key="scale.scal.slider")
-        img_ = read_img(image)
-        rows, cols, dimms = img_.shape
-        img_scaled_ = scaling_(img_, scale, rows, cols)
-        show_plot(img_scaled_)
-    elif(choice == 'Shearing'):
-        with st.sidebar:
-            type = st.selectbox("Shear Type: ", ("Horizontal", "Vertical"), key="shear.type.selectbox")
-            shear = st.slider("How much do you want to shear? (0.5 - 2.0): ", 0.5, 2.0, 0.5, key="shear.scal.slider")
-        img_ = read_img(image)
-        rows, cols, dimms = img_.shape
-        img_sheared_ = shearing(shear, img_, rows, cols, type)
-        show_plot(img_sheared_)
-    elif(choice == 'Reflection'):
-        img_ = read_img(image)
-        rows, cols, dimms = img_.shape
-        img_reflected_ = reflection_(img_, rows, cols)
-        show_plot(img_reflected_)
-    else:
-        print("Invalid Choice")
 
 if __name__ == '__main__':
     main()
